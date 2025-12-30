@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Basecamp Notifications
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/waybar-basecamp/waybar-basecamp-bin check
+
+[Install]
+WantedBy=default.target
+

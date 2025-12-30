@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Basecamp Check every 1 minutes
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Unit=waybar-basecamp.service
+
+[Install]
+WantedBy=timers.target
