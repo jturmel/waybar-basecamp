@@ -33,6 +33,25 @@ jobs:
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
         with:
+          body: |
+            ${{ github.event.release.body }}
+
+            ## Quick Install (Recommended)
+
+            To install the **latest** version of `waybar-basecamp`:
+            ```bash
+            curl -sL https://github.com/jturmel/waybar-basecamp/releases/latest/download/install.sh | bash
+            ```
+
+            To install **this specific version** (${{ github.ref_name }}):
+            ```bash
+            curl -sL https://github.com/jturmel/waybar-basecamp/releases/download/${{ github.ref_name }}/install.sh | VERSION=${{ github.ref_name }} bash
+            ```
+
+            The script will automatically download the binary and set up the systemd services for you.
+
+            ### Final Step
+            After installation, don't forget to follow the [Waybar Integration](https://github.com/jturmel/waybar-basecamp#waybar-integration) steps in the README to update your Waybar configuration and see your notifications!
           files: |
             waybar-basecamp
             install.sh

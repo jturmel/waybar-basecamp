@@ -10,8 +10,9 @@ BINARY_NAME="waybar-basecamp"
 SERVICE_NAME="waybar-basecamp.service"
 TIMER_NAME="waybar-basecamp.timer"
 REPO="jturmel/waybar-basecamp"
+VERSION="${VERSION:-latest}"
 
-echo "Installing waybar-basecamp..."
+echo "Installing waybar-basecamp ($VERSION)..."
 
 # Function to download from GitHub release
 download_from_release() {
@@ -20,9 +21,9 @@ download_from_release() {
         echo "Error: curl is not installed. Cannot download missing files."
         exit 1
     fi
-    echo "Downloading $file from latest release..."
-    curl -sL --fail "https://github.com/$REPO/releases/latest/download/$file" -o "$file" || {
-        echo "Error: Failed to download $file. It might not be available in the latest release yet."
+    echo "Downloading $file from release $VERSION..."
+    curl -sL --fail "https://github.com/$REPO/releases/download/$VERSION/$file" -o "$file" || {
+        echo "Error: Failed to download $file. It might not be available in the $VERSION release."
         exit 1
     }
 }
