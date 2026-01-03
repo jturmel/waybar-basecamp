@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Post-commit hook to remove the waybar-basecamp binary
+if [ -f "waybar-basecamp" ]; then
+    echo "Removing waybar-basecamp binary..."
+    rm "waybar-basecamp"
+fi
