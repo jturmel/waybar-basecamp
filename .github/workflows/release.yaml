@@ -11,6 +11,7 @@ jobs:
   build:
     name: Build and Upload Binary
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,6 +32,5 @@ jobs:
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: waybar-basecamp-bin
