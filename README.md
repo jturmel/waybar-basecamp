@@ -52,14 +52,6 @@ If you have Go installed, you can build and install manually:
    ./install.sh
    ```
 
-### Git Hooks
-
-This repository includes a `post-commit` hook to automatically clean up any local `waybar-basecamp` binaries after a commit. To enable it, run:
-
-```bash
-make setup-hooks
-```
-
 ## Configuration
 
 During installation, you will be prompted for:
@@ -117,6 +109,16 @@ You can style the module in `style.css`:
 #custom-basecamp.error {
     color: #ff5555;
 }
+```
+
+## Contributing
+
+### Git Hooks
+
+This repository includes a `post-commit` hook to automatically clean up any local `waybar-basecamp` binaries after a commit. To enable it, run:
+
+```bash
+make setup-hooks
 ```
 
 ## How it Works
