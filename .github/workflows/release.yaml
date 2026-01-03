@@ -28,9 +28,9 @@ jobs:
           sudo apt-get install -y libsecret-1-dev
 
       - name: Build Binary
-        run: go build -v -o waybar-basecamp-bin main.go
+        run: go build -v -o waybar-basecamp main.go
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
         with:
-          files: waybar-basecamp-bin
+          files: waybar-basecamp
