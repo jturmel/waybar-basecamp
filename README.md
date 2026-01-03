@@ -69,12 +69,14 @@ Add the following to your Waybar configuration (usually `~/.config/waybar/config
 
 ```jsonc
 "custom/basecamp": {
-    "format": "BC: {}",
+    "format": "{}", 
     "return-type": "json",
     "exec": "cat /tmp/waybar_basecamp.json",
-    "interval": 1,
-    "on-click": "xdg-open https://3.basecamp.com/ACCOUNT_ID/", // Replace ACCOUNT_ID
-    "signal": 8
+    "interval": 10,
+    "signal": 8,
+    "on-click": "gio launch ~/.local/share/applications/Basecamp.desktop",
+    "on-click-right": "systemctl --user start waybar-basecamp.service",
+    "tooltip": true
 }
 ```
 
