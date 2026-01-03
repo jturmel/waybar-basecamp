@@ -89,6 +89,12 @@ Add it to your bar modules:
 ],
 ```
 
+After adding the configuration, you may need to reload Waybar (usually:
+```bash
+pkill -SIGUSR2 waybar
+```
+or restarting your compositor session).
+
 ### Styling (Optional)
 
 You can style the module in `style.css`:
