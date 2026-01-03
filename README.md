@@ -12,10 +12,6 @@ A simple Go-based tool to show Basecamp notification counts in your Waybar. It u
 ## Prerequisites
 
 - **Linux** (Tested on Wayland/Sway/Hyprland)
-- **libsecret-1-dev**: Required for decrypting browser cookies on some systems.
-  - Ubuntu/Debian: `sudo apt install libsecret-1-dev`
-  - Fedora: `sudo dnf install libsecret-devel`
-  - Arch: `sudo pacman -S libsecret`
 - **curl**: Required for the automatic installation script.
 
 ## Installation
@@ -111,6 +107,12 @@ You can style the module in `style.css`:
 }
 ```
 
+## How it Works
+
+1. **`waybar-basecamp check`**: This command (triggered by systemd) reads your browser cookies, fetches the notification count from Basecamp's API, and writes the result to `/tmp/waybar_basecamp.json`.
+2. **Systemd Timer**: Runs every minute to update the notification count.
+3. **Waybar**: Reads the JSON file and displays the count. The tool sends a signal (`RTMIN+8`) to Waybar to refresh the module immediately after a check.
+
 ## Contributing
 
 ### Git Hooks
@@ -120,9 +122,3 @@ This repository includes a `post-commit` hook to automatically clean up any loca
 ```bash
 make setup-hooks
 ```
-
-## How it Works
-
-1. **`waybar-basecamp check`**: This command (triggered by systemd) reads your browser cookies, fetches the notification count from Basecamp's API, and writes the result to `/tmp/waybar_basecamp.json`.
-2. **Systemd Timer**: Runs every minute to update the notification count.
-3. **Waybar**: Reads the JSON file and displays the count. The tool sends a signal (`RTMIN+8`) to Waybar to refresh the module immediately after a check.

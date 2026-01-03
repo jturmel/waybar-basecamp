@@ -9,7 +9,7 @@ setup-hooks:
 	git config core.hooksPath .githooks
 
 build:
-	go build -v -o $(BINARY_NAME) $(GO_FILES)
+	CGO_ENABLED=1 go build -v -tags netgo,osusergo -ldflags '-extldflags "-static"' -o $(BINARY_NAME) $(GO_FILES)
 
 clean:
 	rm -f $(BINARY_NAME)
