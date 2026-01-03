@@ -4,8 +4,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/.config/waybar-basecamp/waybar-basecamp-bin check
+ExecStart=%h/.local/bin/waybar-basecamp/waybar-basecamp check
 
 [Install]
 WantedBy=default.target
-

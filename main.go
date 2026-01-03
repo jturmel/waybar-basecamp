@@ -21,9 +21,18 @@ import (
 // --- CONFIGURATION ---
 const WaybarSignal = "8" // RTMIN+8
 
+func getConfigDir() string {
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		// Fallback to ~/.config if UserConfigDir fails
+		return filepath.Join(os.Getenv("HOME"), ".config", "waybar-basecamp")
+	}
+	return filepath.Join(configDir, "waybar-basecamp")
+}
+
 var (
-	ConfigDir  = filepath.Join(os.Getenv("HOME"), ".config", "waybar-basecamp")
-	DataFile   = filepath.Join(ConfigDir, "data.json")
+	ConfigDir  = getConfigDir()
+	DataFile   = filepath.Join(ConfigDir, "config.json")
 	OutputFile = "/tmp/waybar_basecamp.json"
 )
 
@@ -93,7 +102,7 @@ func runSetup() {
 	fmt.Println("\nLook at the paths above. Identify the unique folder name for your profile.")
 	fmt.Println("Examples: 'Profile 1', 'Default', 'Work'")
 	fmt.Print("Enter unique Profile identifier: ")
-	
+
 	profileName := readInput()
 	if profileName == "" {
 		profileName = "Default"
@@ -130,7 +139,7 @@ func runCheck() error {
 
 	client := &http.Client{Jar: jar}
 	url := fmt.Sprintf("https://3.basecamp.com/%s/my/readings.json", cfg.AccountID)
-	
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return err
@@ -165,7 +174,7 @@ func runCheck() error {
 			// Found it! Count the length of this array.
 			return writeWaybar(&unreads)
 		}
-		
+
 		// Fallback: Check for "readings" (sometimes used in older APIs)
 		if readings, ok := data["readings"].([]interface{}); ok {
 			return writeWaybar(&readings)
@@ -195,9 +204,15 @@ func getCookieJar(profileName string) (http.CookieJar, error) {
 
 	for _, store := range stores {
 		path := store.FilePath()
-		if !strings.Contains(path, profileName) { continue }
-		if !strings.HasSuffix(path, "Cookies") { continue }
-		if _, err := os.Stat(path); os.IsNotExist(err) { continue }
+		if !strings.Contains(path, profileName) {
+			continue
+		}
+		if !strings.HasSuffix(path, "Cookies") {
+			continue
+		}
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			continue
+		}
 
 		selectedStore = store
 		break
@@ -209,8 +224,8 @@ func getCookieJar(profileName string) (http.CookieJar, error) {
 
 	// FIX: Use our custom cookieFilter type to satisfy the interface
 	filter := cookieFilter(func(c *kooky.Cookie) bool {
-		return strings.Contains(c.Domain, "basecamp.com") || 
-			   strings.Contains(c.Domain, "37signals.com")
+		return strings.Contains(c.Domain, "basecamp.com") ||
+			strings.Contains(c.Domain, "37signals.com")
 	})
 
 	jar, err := selectedStore.SubJar(ctx, filter)
