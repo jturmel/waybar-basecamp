@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Post-commit hook to remove the waybar-basecamp binary
 if [ -f "waybar-basecamp" ]; then
